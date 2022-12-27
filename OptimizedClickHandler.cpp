@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <thread>
 #include <Windows.h>
+#include <chrono>
+#include <ctime>
 
 // Global variable to store the current state of the mouse clicking
 bool clicking = false;
@@ -35,14 +37,24 @@ bool shouldDisableMouseClicking()
     return listening && isKeyPressed(0x39);
 }
 
-// Helper function to update the mouse clicking state
 void updateMouseClickingState()
 {
+    // Add a flag to keep track of whether a message has been output or not
+    static bool messageOutput = false;
+
     // Check if the number 1 key is pressed
     if (isKeyPressed(0x31))
     {
         // Enable listening to number 8 and number 9 keys
         listening = true;
+
+        // Only output the message if one hasn't been output yet
+        if (!messageOutput)
+        {
+            std::time_t timestamp = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            std::cout << "Listening enabled at " << std::ctime(&timestamp);
+            messageOutput = true;
+        }
     }
 
     // Check if the number 0 key is pressed
@@ -50,6 +62,14 @@ void updateMouseClickingState()
     {
         // Stop listening to keyboard
         listening = false;
+
+        // Only output the message if one hasn't been output yet
+        if (!messageOutput)
+        {
+            std::time_t timestamp = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            std::cout << "Listening disabled at " << std::ctime(&timestamp);
+            messageOutput = true;
+        }
     }
 
     // Check if the mouse clicking should be enabled
@@ -57,6 +77,14 @@ void updateMouseClickingState()
     {
         // Enable mouse clicking
         clicking = true;
+
+        // Only output the message if one hasn't been output yet
+        if (!messageOutput)
+        {
+            std::time_t timestamp = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            std::cout << "Mouse clicking enabled at " << std::ctime(&timestamp);
+            messageOutput = true;
+        }
     }
 
     // Check if the mouse clicking should be disabled
@@ -64,6 +92,20 @@ void updateMouseClickingState()
     {
         // Disable mouse clicking
         clicking = false;
+
+        // Only output the message if one hasn't been output yet
+        if (!messageOutput)
+        {
+            std::time_t timestamp = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            std::cout << "Mouse clicking disabled at " << std::ctime(&timestamp);
+            messageOutput = true;
+        }
+    }
+
+    // Reset the messageOutput flag if none of the conditions above are met
+    if (!isKeyPressed(0x31) && !isKeyPressed(0x30) && !shouldEnableMouseClicking() && !shouldDisableMouseClicking())
+    {
+        messageOutput = false;
     }
 
     // Check if the mouse clicking is currently enabled
@@ -73,6 +115,7 @@ void updateMouseClickingState()
         simulateMouseClick();
     }
 }
+
 
 int main()
 {
