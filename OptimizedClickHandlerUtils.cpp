@@ -45,13 +45,13 @@ void updateMouseClickingState() {
 	if (isKeyPressed(0x30)) {
 		// Stop listening to keyboard
 		listening = false;
-
-		// Only output the message if one hasn't been output yet
+		clicking = false; // Stop clicking when 0 key is pressed
 		if (!messageOutput) {
 			std::time_t timestamp = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 			std::cout << "Listening disabled at " << std::ctime(&timestamp);
 			messageOutput = true;
 		}
+
 	}
 
 	// Check if the mouse clicking should be enabled

@@ -4,10 +4,10 @@ This script simulates mouse clicks based on keyboard input.
 
 ## How to use
 
-1. Press the `1` key to enable listening for the `8` and `9` keys.
+1. Press the `1` key to enable listening for the `8`, `9`, and `0` keys.
 2. Press the `8` key to start simulating mouse clicks.
 3. Press the `9` key to stop simulating mouse clicks.
-4. Press the `0` key to disable listening for the `8` and `9` keys.
+4. Press the `0` key to disable listening for the `8` and `9` keys and stop simulating mouse clicks.
 
 ## Requirements
 
@@ -34,4 +34,3 @@ To compile the script using Visual C++, open the script in Visual Studio and sel
 - The script will run in the background and will not be visible in the taskbar or task manager.
 - The script will continue to run until it is manually stopped or the computer is shut down.
 
-I hope this helps! Let me know if you have any further questions or if you need further assistance.
